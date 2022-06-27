@@ -78,7 +78,7 @@ export class IotTable {
         styleSettings={this.styleSettings}
         renderFunc={({ dataStreams }) => (
           <sc-table
-            dataStreams={[ ...this.staticDataStreams, ...dataStreams as SynchroChartsDataStream[] ]}
+            dataStreams={[...this.staticDataStreams, ...(dataStreams as SynchroChartsDataStream[])]}
             tableColumns={this.tableColumns}
             annotations={this.annotations}
             viewport={this.viewport}

@@ -28,4 +28,4 @@ export const parseAlarmData = (value: string) => {
   } catch {
     throw new Error('Could not parse alarm data');
   }
-}
+};

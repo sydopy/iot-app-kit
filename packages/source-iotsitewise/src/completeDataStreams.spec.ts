@@ -202,15 +202,9 @@ describe('parses data type correctly', () => {
 });
 
 describe('parses alarm streams', () => {
-  it('provides streamType', () => {
+  it('provides streamType', () => {});
 
-  });
+  it('provides associatedStreams', () => {});
 
-  it('provides associatedStreams', () => {
-
-  });
-
-  it('parses iotevents alarm stream', () => {
-
-  });
+  it('parses iotevents alarm stream', () => {});
 });

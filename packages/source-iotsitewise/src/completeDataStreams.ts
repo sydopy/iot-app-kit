@@ -3,7 +3,10 @@ import { DataStream, DataType } from '@iot-app-kit/core';
 import { DataPoint } from '@synchro-charts/core';
 import { toSiteWiseAssetProperty, toId } from './time-series-data/util/dataStreamId';
 import { SiteWiseDataStreamQuery, PropertyQuery, AlarmSource } from './time-series-data/types';
-import { parseAlarmData as parseIoTEventsAlarmData, SOURCE as IoTEventsSource } from './time-series-data/alarms/iotevents';
+import {
+  parseAlarmData as parseIoTEventsAlarmData,
+  SOURCE as IoTEventsSource,
+} from './time-series-data/alarms/iotevents';
 
 const toDataType = (propertyDataType: PropertyDataType | string | undefined): DataType => {
   if (propertyDataType === 'STRING') {
@@ -16,7 +19,7 @@ const toDataType = (propertyDataType: PropertyDataType | string | undefined): Da
   return 'NUMBER';
 };
 
-const parseAlarmData = ({ alarmSource, data }: { alarmSource: AlarmSource, data: DataPoint[] }): DataPoint[] => {
+const parseAlarmData = ({ alarmSource, data }: { alarmSource: AlarmSource; data: DataPoint[] }): DataPoint[] => {
   if (alarmSource === IoTEventsSource) {
     return data.map(({ x, y }: DataPoint): DataPoint => {
       if (typeof y === 'string') {
@@ -27,7 +30,7 @@ const parseAlarmData = ({ alarmSource, data }: { alarmSource: AlarmSource, data:
   }
 
   return data;
-}
+};
 
 /**
  * Get completed data streams by merging together the data streams with the asset models.
@@ -45,10 +48,12 @@ export const completeDataStreams = ({
 
   queries.forEach(({ assets }) =>
     assets.forEach(({ assetId, properties }) =>
-    properties.forEach(({ propertyId, ...settings }) => {
-      const streamId = toId({ assetId, propertyId });
-      normalizedQueries[streamId] = settings;
-    })));
+      properties.forEach(({ propertyId, ...settings }) => {
+        const streamId = toId({ assetId, propertyId });
+        normalizedQueries[streamId] = settings;
+      })
+    )
+  );
 
   return dataStreams.map((dataStream) => {
     const correspondingQuery = normalizedQueries[dataStream.id];
@@ -82,4 +87,4 @@ export const completeDataStreams = ({
       dataType: toDataType(property.dataType),
     };
   });
-}
+};

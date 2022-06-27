@@ -1,5 +1,5 @@
 import { CacheSettings, DataStreamQuery, RefId } from '@iot-app-kit/core';
-import { StreamAssociation, StreamType } from '@synchro-charts/core'
+import { StreamAssociation, StreamType } from '@synchro-charts/core';
 import { SOURCE as IoTEventsSource } from '../time-series-data/alarms/iotevents';
 
 /**
