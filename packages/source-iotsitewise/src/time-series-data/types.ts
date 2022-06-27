@@ -1,4 +1,5 @@
 import { CacheSettings, DataStreamQuery, RefId } from '@iot-app-kit/core';
+import { StreamAssociation, StreamType } from '@synchro-charts/core'
 
 /**
  * Learn more about AWS IoT SiteWise assets at https://docs.aws.amazon.com/iot-sitewise/latest/userguide/industrial-asset-models.html
@@ -13,6 +14,9 @@ export type PropertyQuery = {
   refId?: RefId;
   resolution?: string;
   cacheSettings?: CacheSettings;
+  associatedStreams?: StreamAssociation[];
+  streamType?: StreamType;
+  alarmSource?: string;
 };
 
 export type AssetQuery = {
