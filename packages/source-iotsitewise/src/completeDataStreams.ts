@@ -2,8 +2,8 @@ import { DescribeAssetModelResponse, PropertyDataType } from '@aws-sdk/client-io
 import { DataStream, DataType } from '@iot-app-kit/core';
 import { DataPoint } from '@synchro-charts/core';
 import { toSiteWiseAssetProperty, toId } from './time-series-data/util/dataStreamId';
-import { SiteWiseDataStreamQuery, PropertyQuery } from './time-series-data/types';
-import { parseAlarmData as parseIoTEventsAlarmData } from './time-series-data/alarms/iotevents';
+import { SiteWiseDataStreamQuery, PropertyQuery, AlarmSource } from './time-series-data/types';
+import { parseAlarmData as parseIoTEventsAlarmData, SOURCE as IoTEventsSource } from './time-series-data/alarms/iotevents';
 
 const toDataType = (propertyDataType: PropertyDataType | string | undefined): DataType => {
   if (propertyDataType === 'STRING') {
@@ -16,8 +16,8 @@ const toDataType = (propertyDataType: PropertyDataType | string | undefined): Da
   return 'NUMBER';
 };
 
-const parseAlarmData = ({ alarmSource, data }: { alarmSource: string, data: DataPoint[] }): DataPoint[] => {
-  if (alarmSource === 'iotevents') {
+const parseAlarmData = ({ alarmSource, data }: { alarmSource: AlarmSource, data: DataPoint[] }): DataPoint[] => {
+  if (alarmSource === IoTEventsSource) {
     return data.map(({ x, y }: DataPoint): DataPoint => {
       if (typeof y === 'string') {
         return { x, y: parseIoTEventsAlarmData(y) };

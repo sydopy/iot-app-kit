@@ -1,3 +1,5 @@
+export const SOURCE = 'iotevents';
+
 export const ALARM_STATUS = {
   ACTIVE: 'Active',
   NORMAL: 'Normal',
