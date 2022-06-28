@@ -61,8 +61,6 @@ export const completeDataStreams = ({
     if (correspondingQuery) {
       dataStream.streamType = correspondingQuery.streamType;
       dataStream.associatedStreams = correspondingQuery.associatedStreams;
-      dataStream.name = correspondingQuery.name;
-      dataStream.detailedName = correspondingQuery.detailedName;
 
       if (correspondingQuery.alarmSource) {
         dataStream.data = parseAlarmData({ alarmSource: correspondingQuery.alarmSource, data: dataStream.data });
@@ -84,8 +82,7 @@ export const completeDataStreams = ({
 
     return {
       ...dataStream,
-      name: dataStream.name || property.name,
-      detailedName: dataStream.detailedName,
+      name: property.name,
       unit: property.unit,
       dataType: toDataType(property.dataType),
     };
