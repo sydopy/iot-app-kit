@@ -20,6 +20,8 @@ export type PropertyQuery = {
   associatedStreams?: StreamAssociation[];
   streamType?: StreamType;
   alarmSource?: AlarmSource;
+  name?: string;
+  detailedName?: string;
 };
 
 export type AssetQuery = {

@@ -201,10 +201,14 @@ describe('parses data type correctly', () => {
   });
 });
 
-describe('parses alarm streams', () => {
+describe('IoTEvents alarms', () => {
   it('provides streamType', () => {});
 
   it('provides associatedStreams', () => {});
 
-  it('parses iotevents alarm stream', () => {});
+  it('parses alarm stream', () => {});
+
+  it('provides alarm stream name', () => {});
+
+  it('provides alarm stream detailedName', () => {});
 });
