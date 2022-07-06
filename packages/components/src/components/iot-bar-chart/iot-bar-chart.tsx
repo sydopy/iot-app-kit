@@ -10,6 +10,7 @@ import {
   ProviderWithViewport,
   TimeSeriesData,
   TimeSeriesDataRequest,
+  AudioAlertPlayer,
 } from '@iot-app-kit/core';
 
 const HOUR_IN_MS = 1000 * 60 * 60;
@@ -33,6 +34,8 @@ export class IotBarChart {
   @Prop() isEditing: boolean | undefined;
 
   @Prop() styleSettings: StyleSettingsMap | undefined;
+
+  @Prop() audioAlertPlayer: AudioAlertPlayer | undefined;
 
   @State() provider: ProviderWithViewport<TimeSeriesData[]>;
 
@@ -79,9 +82,11 @@ export class IotBarChart {
   render() {
     return (
       <iot-time-series-connector
+        annotations={this.annotations}
         provider={this.provider}
         styleSettings={this.styleSettings}
         assignDefaultColors
+        audioAlertPlayer={this.audioAlertPlayer}
         renderFunc={({ dataStreams }) => (
           <sc-bar-chart
             dataStreams={dataStreams as SynchroChartsDataStream[]}

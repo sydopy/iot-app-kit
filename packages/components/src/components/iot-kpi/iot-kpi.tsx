@@ -9,6 +9,7 @@ import {
   Viewport,
   TimeSeriesDataRequest,
   ProviderWithViewport,
+  AudioAlertPlayer,
 } from '@iot-app-kit/core';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -30,6 +31,8 @@ export class IotKpi {
   @Prop() isEditing: boolean | undefined;
 
   @Prop() styleSettings: StyleSettingsMap | undefined;
+
+  @Prop() audioAlertPlayer: AudioAlertPlayer | undefined;
 
   @State() provider: ProviderWithViewport<TimeSeriesData[]>;
 
@@ -72,8 +75,10 @@ export class IotKpi {
   render() {
     return (
       <iot-time-series-connector
+        annotations={this.annotations}
         provider={this.provider}
         styleSettings={this.styleSettings}
+        audioAlertPlayer={this.audioAlertPlayer}
         renderFunc={({ dataStreams }) => (
           <sc-kpi
             dataStreams={dataStreams as SynchroChartsDataStream[]}

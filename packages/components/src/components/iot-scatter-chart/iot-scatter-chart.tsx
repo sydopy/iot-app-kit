@@ -9,6 +9,7 @@ import {
   TimeSeriesDataRequest,
   ProviderWithViewport,
   combineProviders,
+  AudioAlertPlayer,
 } from '@iot-app-kit/core';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -30,6 +31,8 @@ export class IotScatterChart {
   @Prop() isEditing: boolean | undefined;
 
   @Prop() styleSettings: StyleSettingsMap | undefined;
+
+  @Prop() audioAlertPlayer: AudioAlertPlayer | undefined;
 
   @State() provider: ProviderWithViewport<TimeSeriesData[]>;
 
@@ -71,9 +74,11 @@ export class IotScatterChart {
   render() {
     return (
       <iot-time-series-connector
+        annotations={this.annotations}
         provider={this.provider}
         styleSettings={this.styleSettings}
         assignDefaultColors
+        audioAlertPlayer={this.audioAlertPlayer}
         renderFunc={({ dataStreams }) => {
           return (
             <sc-scatter-chart
