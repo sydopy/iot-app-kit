@@ -1,6 +1,6 @@
 import { Component, Prop, h, Listen, State, Watch } from '@stencil/core';
 import { v4 as uuidv4 } from 'uuid';
-import { Annotations, DataStream as SynchroChartsDataStream } from '@synchro-charts/core';
+import { Annotations, DataStream as SynchroChartsDataStream, Threshold } from '@synchro-charts/core';
 import {
   TimeSeriesDataRequestSettings,
   StyleSettingsMap,
@@ -11,6 +11,7 @@ import {
   TimeSeriesData,
   TimeSeriesDataRequest,
   AudioAlertPlayer,
+  AudioAlert,
 } from '@iot-app-kit/core';
 
 const HOUR_IN_MS = 1000 * 60 * 60;
@@ -36,6 +37,8 @@ export class IotBarChart {
   @Prop() styleSettings: StyleSettingsMap | undefined;
 
   @Prop() audioAlertPlayer: AudioAlertPlayer | undefined;
+
+  @Prop() audioAlerts: Map<Threshold | string, AudioAlert> | undefined;
 
   @State() provider: ProviderWithViewport<TimeSeriesData[]>;
 
@@ -87,6 +90,7 @@ export class IotBarChart {
         styleSettings={this.styleSettings}
         assignDefaultColors
         audioAlertPlayer={this.audioAlertPlayer}
+        audioAlerts={this.audioAlerts}
         renderFunc={({ dataStreams }) => (
           <sc-bar-chart
             dataStreams={dataStreams as SynchroChartsDataStream[]}

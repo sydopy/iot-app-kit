@@ -17,3 +17,4 @@ export * from './mockWidgetProperties';
 
 export * from './common/audioAlertPlayer';
 export * from './common/audioAlert';
+export * from './common/audioAlertManager';

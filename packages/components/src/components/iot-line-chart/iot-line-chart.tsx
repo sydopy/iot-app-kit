@@ -1,5 +1,5 @@
 import { Component, Prop, h, Listen, State, Watch } from '@stencil/core';
-import { Annotations, DataStream as SynchroChartsDataStream } from '@synchro-charts/core';
+import { Annotations, DataStream as SynchroChartsDataStream, Threshold } from '@synchro-charts/core';
 import {
   StyleSettingsMap,
   TimeSeriesDataRequestSettings,
@@ -10,6 +10,7 @@ import {
   Viewport,
   ProviderWithViewport,
   AudioAlertPlayer,
+  AudioAlert,
 } from '@iot-app-kit/core';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -31,6 +32,8 @@ export class IotLineChart {
   @Prop() isEditing: boolean | undefined;
 
   @Prop() styleSettings: StyleSettingsMap | undefined;
+
+  @Prop() audioAlerts: Map<Threshold | string, AudioAlert> | undefined;
 
   @Prop() audioAlertPlayer: AudioAlertPlayer | undefined;
 
@@ -80,6 +83,7 @@ export class IotLineChart {
         styleSettings={this.styleSettings}
         assignDefaultColors
         audioAlertPlayer={this.audioAlertPlayer}
+        audioAlerts={this.audioAlerts}
         renderFunc={({ dataStreams }) => {
           return (
             <sc-line-chart

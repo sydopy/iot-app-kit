@@ -10,6 +10,7 @@ import {
   getDataPoints,
   getVisibleData,
   isNumberDataStream,
+  initializeAudioAlerts,
 } from '@iot-app-kit/core';
 import { bindStylesToDataStreams } from '../common/bindStylesToDataStreams';
 import {
@@ -33,6 +34,7 @@ const combineTimeSeriesData = (timeSeresDataResults: TimeSeriesData[]): TimeSeri
     { dataStreams: [], viewport: { duration: 0 } }
   );
 
+// probably exists a better way
 const isLiveData = (viewport: MinimalViewPortConfig): boolean => {
   if ('duration' in viewport) {
     return true;
@@ -62,12 +64,12 @@ export class IotTimeSeriesConnector {
 
   @Prop() viewport: MinimalViewPortConfig;
 
+  @Prop() audioAlerts: Map<Threshold | string, AudioAlert> | undefined;
+
   @State() data: TimeSeriesData = {
     dataStreams: [],
     viewport: DEFAULT_VIEWPORT,
   };
-
-  @State() audioAlerts: Map<Threshold | string, AudioAlert>;
 
   componentWillLoad() {
     this.provider.subscribe({
@@ -93,30 +95,12 @@ export class IotTimeSeriesConnector {
     this.provider.unsubscribe();
   }
 
-  private initializeAudioAlerts = (thresholds: Threshold[]) => {
-    this.audioAlerts = this.audioAlerts ?? new Map<Threshold, AudioAlert>();
-    thresholds.forEach((threshold) => {
-      if (!this.audioAlerts.has(threshold) && this.audioAlertPlayer) {
-        this.audioAlerts.set(
-          threshold.id ?? threshold,
-          new AudioAlert({
-            audioAlertPlayer: this.audioAlertPlayer,
-            isMuted: false,
-            volume: 1.0,
-            severity: threshold.severity,
-          })
-        );
-      }
-    });
-  };
-
   public playAudioAlert() {
     if (!this.annotations || this.audioAlertPlayer === undefined) {
       return;
     }
     const numberStreams: DataStream[] = this.data.dataStreams.filter(isNumberDataStream);
     const thresholds = getThresholds(this.annotations);
-    this.initializeAudioAlerts(thresholds);
     numberStreams.forEach((dataStream: DataStream) => {
       if (isLiveData(this.data.viewport)) {
         const allPoints = getVisibleData(getDataPoints(dataStream, dataStream.resolution), this.data.viewport);
@@ -130,7 +114,14 @@ export class IotTimeSeriesConnector {
             dataStream: dataStream as SynchroChartsDataStream,
           });
           if (breachedThresh != undefined) {
-            this.audioAlerts.get(breachedThresh.id ?? breachedThresh)?.play();
+            if (this.audioAlerts) {
+              this.audioAlerts.get(breachedThresh.id ?? breachedThresh)?.play();
+            } else {
+              const tempAudioAlerts =
+                this.audioAlerts ?? initializeAudioAlerts(this.audioAlerts, this.audioAlertPlayer, thresholds);
+              tempAudioAlerts.get(breachedThresh.id ?? breachedThresh)?.play();
+              this.audioAlerts = this.audioAlerts ?? tempAudioAlerts;
+            }
           }
         }
       }

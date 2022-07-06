@@ -1,5 +1,5 @@
 import { Component, Prop, h, State, Listen, Watch } from '@stencil/core';
-import { Annotations, DataStream as SynchroChartsDataStream, TableColumn } from '@synchro-charts/core';
+import { Annotations, DataStream as SynchroChartsDataStream, TableColumn, Threshold } from '@synchro-charts/core';
 import {
   StyleSettingsMap,
   TimeSeriesDataRequestSettings,
@@ -10,6 +10,7 @@ import {
   TimeSeriesDataRequest,
   ProviderWithViewport,
   AudioAlertPlayer,
+  AudioAlert,
 } from '@iot-app-kit/core';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -33,6 +34,8 @@ export class IotTable {
   @Prop() styleSettings: StyleSettingsMap | undefined;
 
   @Prop() audioAlertPlayer: AudioAlertPlayer | undefined;
+  
+  @Prop() audioAlerts: Map<Threshold | string, AudioAlert> | undefined;
 
   @State() provider: ProviderWithViewport<TimeSeriesData[]>;
 
@@ -79,6 +82,7 @@ export class IotTable {
         provider={this.provider}
         styleSettings={this.styleSettings}
         audioAlertPlayer={this.audioAlertPlayer}
+        audioAlerts={this.audioAlerts}
         renderFunc={({ dataStreams }) => (
           <sc-table
             dataStreams={dataStreams as SynchroChartsDataStream[]}
