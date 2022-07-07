@@ -13,28 +13,26 @@ export const addXAnnotation = ({
   return dashboardConfiguration.map((widget) => {
     if (widget.id == widgetId) {
       let currAnnotations = widget.annotations;
-        if (currAnnotations && currAnnotations.x){
-          currAnnotations.x.push(annotation);
-        }
-        else if (!currAnnotations) {
-          currAnnotations = {
-            x: [annotation],
-          }
-        }
-        else {
-          currAnnotations = {
-            ...currAnnotations,
-            x: [annotation],
-          }
-        }
-        return {
-          ...widget,
-          annotations: currAnnotations,
-        }
+      if (currAnnotations && currAnnotations.x) {
+        currAnnotations.x.push(annotation);
+      } else if (!currAnnotations) {
+        currAnnotations = {
+          x: [annotation],
+        };
+      } else {
+        currAnnotations = {
+          ...currAnnotations,
+          x: [annotation],
+        };
+      }
+      return {
+        ...widget,
+        annotations: currAnnotations,
+      };
     }
     return widget;
   });
-}
+};
 
 export const deleteXAnnotation = ({
   dashboardConfiguration,
@@ -48,20 +46,20 @@ export const deleteXAnnotation = ({
   return dashboardConfiguration.map((widget) => {
     if (widget.id == widgetId) {
       let currAnnotations = widget.annotations;
-        if (currAnnotations && currAnnotations.x){
-          currAnnotations = {
-            ...currAnnotations,
-            x: currAnnotations.x.filter((annotation) => JSON.stringify(annotation) != JSON.stringify(annotationToDelete)),
-          }
-        }
-        return {
-          ...widget,
-          annotations: currAnnotations,
-        }
+      if (currAnnotations && currAnnotations.x) {
+        currAnnotations = {
+          ...currAnnotations,
+          x: currAnnotations.x.filter((annotation) => JSON.stringify(annotation) != JSON.stringify(annotationToDelete)),
+        };
+      }
+      return {
+        ...widget,
+        annotations: currAnnotations,
+      };
     }
     return widget;
   });
-}
+};
 
 export const editXAnnotation = ({
   dashboardConfiguration,
@@ -77,15 +75,17 @@ export const editXAnnotation = ({
   return dashboardConfiguration.map((widget) => {
     if (widget.id == widgetId) {
       let currAnnotations = widget.annotations;
-        if (currAnnotations && currAnnotations.x){
-          currAnnotations.x = currAnnotations.x.filter((annotation) => JSON.stringify(annotation) != JSON.stringify(oldAnnotation));
-          currAnnotations.x.push(newAnnotation);
-        }
-        return {
-          ...widget,
-          annotations: currAnnotations,
-        }
+      if (currAnnotations && currAnnotations.x) {
+        currAnnotations.x = currAnnotations.x.filter(
+          (annotation) => JSON.stringify(annotation) != JSON.stringify(oldAnnotation)
+        );
+        currAnnotations.x.push(newAnnotation);
+      }
+      return {
+        ...widget,
+        annotations: currAnnotations,
+      };
     }
     return widget;
   });
-}
+};
