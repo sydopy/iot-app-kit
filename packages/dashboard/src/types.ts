@@ -8,6 +8,7 @@ export type Widget = {
   widget: string;
   x: number;
   y: number;
+  z: number;
   height: number;
   width: number;
   annotations?: Annotations;
