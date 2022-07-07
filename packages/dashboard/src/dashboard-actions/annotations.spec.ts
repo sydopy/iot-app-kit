@@ -2,69 +2,27 @@ import { addXAnnotation, deleteXAnnotation, editXAnnotation } from './annotation
 import { Widget } from '../types';
 import { Annotations, XAnnotation } from '@synchro-charts/core';
 
-const XANNOTATION_1 : XAnnotation = {
+const XANNOTATION_1: XAnnotation = {
   color: 'red',
   value: new Date(2000, 1, 0),
-}
-
-const XANNOTATION_2 : XAnnotation = {
-  color: 'red',
-  value: new Date(2000, 3, 15),
-}
-
-const XANNOTATION_3 : XAnnotation = {
-  color: 'red',
-  value: new Date(2000, 7, 19),
-}
-
-const ANNOTATIONS : Annotations = {
-  x: [XANNOTATION_1],
-}
-
-const ANNOTATIONS_2 : Annotations = {
-  x: [XANNOTATION_2],
-}
-
-const TWO_ANNOTATIONS : Annotations = {
-  x: [XANNOTATION_1, XANNOTATION_2],
-}
-
-const EDITED_ANNOTATIONS : Annotations = {
-  x: [XANNOTATION_1, XANNOTATION_3],
-}
-
-const EMPTY_ANNOTATIONS : Annotations = {
-  x: [],
-}
-
-const WIDGET_WITH_EMPTY_ANNOTATIONS: Widget = {
-  width: 10,
-  height: 10,
-  x: 10,
-  y: 10,
-  widget: 'line-chart',
-  id: 'widget-with-empty-annotations',
-  annotations: EMPTY_ANNOTATIONS,
-}
-
-const WIDGET_WITH_BOTH_ANNOTATIONS: Widget = {
-  width: 10,
-  height: 10,
-  x: 10,
-  y: 10,
-  widget: 'line-chart',
-  id: 'widget-with-both-annotations',
-  annotations: TWO_ANNOTATIONS,
 };
 
-const WIDGET_WITH_EDITED_ANNOTATIONS: Widget = {
-  width: 10,
-  height: 10,
-  x: 10,
-  y: 10,
-  widget: 'line-chart',
-  id: 'widget-with-edited-annotations',
-  annotations: EDITED_ANNOTATIONS,
+const XANNOTATION_2: XAnnotation = {
+  color: 'red',
+  value: new Date(2000, 3, 15),
+};
+
+const XANNOTATION_3: XAnnotation = {
+  color: 'red',
+  value: new Date(2000, 7, 19),
+};
+
+const ANNOTATIONS: Annotations = {
+  x: [XANNOTATION_1],
+};
+
+const ANNOTATIONS_2: Annotations = {
+  x: [XANNOTATION_2],
 };
 
 const WIDGET_WITH_FIRST_ANNOTATION: Widget = {
@@ -76,16 +34,6 @@ const WIDGET_WITH_FIRST_ANNOTATION: Widget = {
   id: 'widget-with-first-annotation',
   annotations: ANNOTATIONS,
 };
-
-const WIDGET_WITH_SECOND_ANNOTATION: Widget = {
-  width: 10,
-  height: 10,
-  x: 10,
-  y: 10,
-  widget: 'line-chart',
-  id: 'widget-with-second-annotation',
-  annotations: ANNOTATIONS_2,
-}
 
 const WIDGET_WITHOUT_ANNOTATIONS: Widget = {
   width: 10,
@@ -309,7 +257,7 @@ describe('editXAnnotation', () => {
       id: 'widget-with-first-annotation',
       annotations: {
         x: [XANNOTATION_1],
-      }
+      },
     };
     const RESULT_WIDGET = {
       width: 10,
@@ -329,7 +277,6 @@ describe('editXAnnotation', () => {
       })
     ).toEqual([RESULT_WIDGET]);
   });
-
 
   it('edits an annotation on a widget with multiple annotations', () => {
     const INPUT_WIDGET = {
