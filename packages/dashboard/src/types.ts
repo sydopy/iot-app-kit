@@ -1,4 +1,5 @@
 import { Viewport } from '@iot-app-kit/core';
+import { Annotations } from '@synchro-charts/core';
 import { Store } from 'redux';
 import { Action } from 'redux';
 
@@ -9,6 +10,7 @@ export type Widget = {
   y: number;
   height: number;
   width: number;
+  annotations?: Annotations;
 };
 
 export type Anchor = 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left' | 'left' | 'right' | 'top' | 'bottom';
