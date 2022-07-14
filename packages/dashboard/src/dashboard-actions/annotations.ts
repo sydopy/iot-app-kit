@@ -37,11 +37,11 @@ export const addXAnnotation = ({
 export const deleteXAnnotation = ({
   dashboardConfiguration,
   widgetId,
-  annotationToDelete,
+  annotationIdToDelete,
 }: {
   dashboardConfiguration: DashboardConfiguration;
   widgetId: string;
-  annotationToDelete: XAnnotation;
+  annotationIdToDelete: string;
 }) => {
   return dashboardConfiguration.map((widget) => {
     if (widget.id == widgetId) {
@@ -49,7 +49,7 @@ export const deleteXAnnotation = ({
       if (currAnnotations && currAnnotations.x) {
         currAnnotations = {
           ...currAnnotations,
-          x: currAnnotations.x.filter((annotation) => JSON.stringify(annotation) != JSON.stringify(annotationToDelete)),
+          x: currAnnotations.x.filter((annotation) => annotation.id != annotationIdToDelete),
         };
       }
       return {
@@ -64,12 +64,12 @@ export const deleteXAnnotation = ({
 export const editXAnnotation = ({
   dashboardConfiguration,
   widgetId,
-  oldAnnotation,
+  oldAnnotationId,
   newAnnotation,
 }: {
   dashboardConfiguration: DashboardConfiguration;
   widgetId: string;
-  oldAnnotation: XAnnotation;
+  oldAnnotationId: string;
   newAnnotation: XAnnotation;
 }) => {
   return dashboardConfiguration.map((widget) => {
@@ -77,7 +77,7 @@ export const editXAnnotation = ({
       let currAnnotations = widget.annotations;
       if (currAnnotations && currAnnotations.x) {
         currAnnotations.x = currAnnotations.x.filter(
-          (annotation) => JSON.stringify(annotation) != JSON.stringify(oldAnnotation)
+          (annotation) => annotation.id != oldAnnotationId
         );
         currAnnotations.x.push(newAnnotation);
       }
