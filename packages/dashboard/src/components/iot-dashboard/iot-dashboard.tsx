@@ -9,9 +9,94 @@ import { DASHBOARD_CONTAINER_ID, getDashboardPosition } from './getDashboardPosi
 import { trimWidgetPosition } from './trimWidgetPosition';
 import { deleteWidgets } from '../../dashboard-actions/delete';
 import { paste } from '../../dashboard-actions/paste';
+import { XAnnotation, DataStream as SynchroChartsDataStream, DataType } from '@synchro-charts/core';
+import { addXAnnotation, deleteXAnnotation, editXAnnotation } from '../../dashboard-actions/annotations';
 
 const DEFAULT_STRETCH_TO_FIT = true;
 const DEFAULT_CELL_SIZE = 15;
+
+const DAY_RESOLUTION = 1000 * 60 * 60 * 24; // one day
+const style = { width: '100%' };
+
+const standardAnnotation = {
+  color: 'red',
+  value: 40,
+  showValue: true,
+};
+
+const sampleAnnotations = {
+  y: [standardAnnotation],
+};
+const sampleViewport = {
+  start: new Date(2000, 0, 0),
+  end: new Date(2001, 0, 0),
+  group: 'viewport-group',
+};
+const sampleLegend = {
+  width: 100,
+  position: 'BOTTOM',
+}
+const sampleDataStreams = [{
+  id: 'car-count',
+  dataType: DataType.STRING,
+  color: '#1d8102',
+  name: 'Car Count',
+  resolution: DAY_RESOLUTION, // one day
+  data: [
+    {
+      x: new Date(2000, 1, 0).getTime(),
+      y: 7,
+    }, {
+      x: new Date(2000, 3, 0).getTime(),
+      y: 18,
+    }, {
+      x: new Date(2000, 4, 0).getTime(),
+      y: 11,
+    }, {
+      x: new Date(2000, 5, 0).getTime(),
+      y: 30,
+    }, {
+      x: new Date(2000, 7, 0).getTime(),
+      y: 16,
+    }, {
+      x: new Date(2000, 8, 0).getTime(),
+      y: 26,
+    }, {
+      x: new Date(2000, 10, 0).getTime(),
+      y: 46,
+    }, {
+      x: new Date(2000, 11, 0).getTime(),
+      y: 100,
+    }
+  ],
+  aggregates: {
+    [DAY_RESOLUTION]: [{
+      x: new Date(2000, 1, 0).getTime(),
+      y: 7,
+    }, {
+      x: new Date(2000, 3, 0).getTime(),
+      y: 18,
+    }, {
+      x: new Date(2000, 4, 0).getTime(),
+      y: 11,
+    }, {
+      x: new Date(2000, 5, 0).getTime(),
+      y: 30,
+    }, {
+      x: new Date(2000, 7, 0).getTime(),
+      y: 16,
+    }, {
+      x: new Date(2000, 8, 0).getTime(),
+      y: 26,
+    }, {
+      x: new Date(2000, 10, 0).getTime(),
+      y: 46,
+    }, {
+      x: new Date(2000, 11, 0).getTime(),
+      y: 100,
+    }]
+  }
+}];
 
 @Component({
   tag: 'iot-dashboard',
@@ -416,6 +501,45 @@ export class IotDashboard {
     return this.intermediateDashboardConfiguration || this.currDashboardConfiguration;
   };
 
+  /**
+   * Modify annotation data based on input from UI
+   */
+  addAnnotation = (e: Event) => {
+    e.preventDefault();
+    const original = this.dashboardConfiguration;
+    console.log(this.dashboardConfiguration);
+    const XANNOTATION: XAnnotation = {
+      color: 'red',
+      value: (e as any).target.value,
+      id: Date.now().toString(),
+    };
+    console.log('Annotation for ', XANNOTATION.value, ' added!');
+    this.dashboardConfiguration = addXAnnotation({dashboardConfiguration: original, widgetId: this.dashboardConfiguration[0].id, annotation: XANNOTATION});
+    console.log(this.dashboardConfiguration);
+  };
+
+  deleteAnnotation = (e: Event) => {
+    e.preventDefault();
+    const original = this.dashboardConfiguration;
+    const stringInput = (e as any).target[0].value;
+    console.log('Annotation ', stringInput, ' deleted!');
+    this.dashboardConfiguration = deleteXAnnotation({dashboardConfiguration: original, widgetId: this.dashboardConfiguration[0].id, annotationIdToDelete: stringInput});
+  };
+
+  editAnnotation = (e: Event) => {
+    e.preventDefault();
+    const original = this.dashboardConfiguration;
+    const dateInput = (e as any).target[1].value;
+    const stringInput = (e as any).target[0].value;
+    console.log('Annotation ', stringInput, ' edited!');
+    const XANNOTATION: XAnnotation = {
+      color: 'red',
+      value: dateInput,
+      id: Date.now().toString(),
+    }
+    this.dashboardConfiguration = editXAnnotation({dashboardConfiguration: original, widgetId: this.dashboardConfiguration[0].id, oldAnnotationId: stringInput, newAnnotation: XANNOTATION});
+  };
+
   render() {
     const dashboardConfiguration = this.getDashboardConfiguration();
     const cellSize = this.actualCellSize();
@@ -426,46 +550,76 @@ export class IotDashboard {
       dashboardConfiguration,
     });
     return (
-      <div
-        id={DASHBOARD_CONTAINER_ID}
-        tabIndex={0}
-        class="container"
-        style={{
-          width: this.stretchToFit ? '100%' : `${this.width}px`,
-        }}
-      >
-        {dashboardConfiguration.map((widget) => (
-          <iot-dashboard-widget
-            isSelected={this.selectedWidgetIds.includes(widget.id)}
-            key={widget.id}
-            cellSize={this.actualCellSize()}
-            widget={widget}
-          />
-        ))}
+      <div>
+        <br></br>
+        <div>
+          <label htmlFor='addAnnotation'> Add annotation:</label>
+          <input type='date' id='addAnnotation' onChange={this.addAnnotation}></input>
+        </div>
+        <div>
+          <form onSubmit={this.deleteAnnotation}>
+            <label htmlFor='deleteAnnotation'> Delete annotation:</label>
+            <select id='deleteAnnotation'>
+            {this.dashboardConfiguration[0].annotations?.x?.map(annotation => (
+              <option value={annotation.id}>{JSON.stringify(annotation)}</option>
+            ))}
+            </select>
+            <input type='submit' value='Delete'></input>
+          </form>
+        <div>
+          <form onSubmit={this.editAnnotation}>
+            <label htmlFor='editAnnotation'> Edit annotation:</label>
+            <select id='editAnnotation'>
+            {this.dashboardConfiguration[0].annotations?.x?.map(annotation => (
+              <option value={annotation.id}>{JSON.stringify(annotation)}</option>
+            ))}
+            </select>
+            <input type='date' id='dateInput'></input>
+            <input type='submit' value='Edit'></input>
+          </form>
+      </div>
+      </div>
+        <div
+          id={DASHBOARD_CONTAINER_ID}
+          tabIndex={0}
+          class="container"
+          style={{
+            width: this.stretchToFit ? '100%' : `${this.width}px`,
+          }}
+        >
+          {dashboardConfiguration.map((widget) => (
+            <iot-dashboard-widget
+              isSelected={this.selectedWidgetIds.includes(widget.id)}
+              key={widget.id}
+              cellSize={this.actualCellSize()}
+              widget={widget}
+            />
+          ))}
 
-        {selectionBox != null && (
-          <iot-selection-box
-            onResize={this.onResizeStart}
-            cellSize={this.actualCellSize()}
-            x={selectionBox.x}
-            y={selectionBox.y}
-            height={selectionBox.height}
-            width={selectionBox.width}
-          />
-        )}
-        {<div class="grid-image" style={{ backgroundSize: `${cellSize}px` }} />}
+          {selectionBox != null && (
+            <iot-selection-box
+              onResize={this.onResizeStart}
+              cellSize={this.actualCellSize()}
+              x={selectionBox.x}
+              y={selectionBox.y}
+              height={selectionBox.height}
+              width={selectionBox.width}
+            />
+          )}
+          {<div class="grid-image" style={{ backgroundSize: `${cellSize}px` }} />}
 
-        {this.activeGesture === 'selection' && rect && (
-          <div
-            class="select-rect"
-            style={{
-              left: `${rect.x}px`,
-              top: `${rect.y}px`,
-              width: `${rect.width}px`,
-              height: `${rect.height}px`,
-            }}
-          ></div>
-        )}
+          {this.activeGesture === 'selection' && rect && (
+            <div
+              class="select-rect"
+              style={{
+                left: `${rect.x}px`,
+                top: `${rect.y}px`,
+                width: `${rect.width}px`,
+                height: `${rect.height}px`,
+              }}
+            ></div>
+          )}
+        </div>
       </div>
     );
   }

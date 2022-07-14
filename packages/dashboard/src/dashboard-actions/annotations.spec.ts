@@ -5,16 +5,19 @@ import { Annotations, XAnnotation } from '@synchro-charts/core';
 const XANNOTATION_1: XAnnotation = {
   color: 'red',
   value: new Date(2000, 1, 0),
+  id: '1',
 };
 
 const XANNOTATION_2: XAnnotation = {
   color: 'red',
   value: new Date(2000, 3, 15),
+  id: '2',
 };
 
 const XANNOTATION_3: XAnnotation = {
   color: 'red',
   value: new Date(2000, 7, 19),
+  id: '3',
 };
 
 const ANNOTATIONS: Annotations = {
@@ -30,6 +33,7 @@ const WIDGET_WITH_FIRST_ANNOTATION: Widget = {
   height: 10,
   x: 10,
   y: 10,
+  z: 10,
   widget: 'line-chart',
   id: 'widget-with-first-annotation',
   annotations: ANNOTATIONS,
@@ -40,6 +44,7 @@ const WIDGET_WITHOUT_ANNOTATIONS: Widget = {
   height: 10,
   x: 10,
   y: 10,
+  z: 10,
   widget: 'line-chart',
   id: 'widget-without-annotations',
 };
@@ -51,6 +56,7 @@ describe('addXAnnotation', () => {
       height: 10,
       x: 10,
       y: 10,
+      z: 10,
       widget: 'line-chart',
       id: 'widget-without-annotations',
     };
@@ -59,6 +65,7 @@ describe('addXAnnotation', () => {
       height: 10,
       x: 10,
       y: 10,
+      z: 10,
       widget: 'line-chart',
       id: 'widget-without-annotations',
       annotations: {
@@ -80,6 +87,7 @@ describe('addXAnnotation', () => {
       height: 10,
       x: 10,
       y: 10,
+      z: 10,
       widget: 'line-chart',
       id: 'widget-with-empty-annotations',
       annotations: {
@@ -91,6 +99,7 @@ describe('addXAnnotation', () => {
       height: 10,
       x: 10,
       y: 10,
+      z: 10,
       widget: 'line-chart',
       id: 'widget-with-empty-annotations',
       annotations: {
@@ -112,6 +121,7 @@ describe('addXAnnotation', () => {
       height: 10,
       x: 10,
       y: 10,
+      z: 10,
       widget: 'line-chart',
       id: 'widget-with-first-annotation',
       annotations: {
@@ -123,6 +133,7 @@ describe('addXAnnotation', () => {
       height: 10,
       x: 10,
       y: 10,
+      z: 10,
       widget: 'line-chart',
       id: 'widget-with-first-annotation',
       annotations: {
@@ -156,6 +167,7 @@ describe('deleteXAnnotation', () => {
       height: 10,
       x: 10,
       y: 10,
+      z: 10,
       widget: 'line-chart',
       id: 'widget-with-first-annotation',
       annotations: {
@@ -167,6 +179,7 @@ describe('deleteXAnnotation', () => {
       height: 10,
       x: 10,
       y: 10,
+      z: 10,
       widget: 'line-chart',
       id: 'widget-with-first-annotation',
       annotations: {
@@ -177,7 +190,7 @@ describe('deleteXAnnotation', () => {
       deleteXAnnotation({
         dashboardConfiguration: [INPUT_WIDGET],
         widgetId: 'widget-with-first-annotation',
-        annotationToDelete: XANNOTATION_1,
+        annotationIdToDelete: '1',
       })
     ).toEqual([RESULT_WIDGET]);
   });
@@ -188,6 +201,7 @@ describe('deleteXAnnotation', () => {
       height: 10,
       x: 10,
       y: 10,
+      z: 10,
       widget: 'line-chart',
       id: 'widget-with-both-annotations',
       annotations: {
@@ -199,6 +213,7 @@ describe('deleteXAnnotation', () => {
       height: 10,
       x: 10,
       y: 10,
+      z: 10,
       widget: 'line-chart',
       id: 'widget-with-both-annotations',
       annotations: {
@@ -209,7 +224,7 @@ describe('deleteXAnnotation', () => {
       deleteXAnnotation({
         dashboardConfiguration: [INPUT_WIDGET],
         widgetId: 'widget-with-both-annotations',
-        annotationToDelete: XANNOTATION_2,
+        annotationIdToDelete: ,
       })
     ).toEqual([RESULT_WIDGET]);
   });
@@ -219,7 +234,7 @@ describe('deleteXAnnotation', () => {
       deleteXAnnotation({
         dashboardConfiguration: [WIDGET_WITH_FIRST_ANNOTATION],
         widgetId: 'widget-with-first-annotation',
-        annotationToDelete: XANNOTATION_2,
+        annotationIdToDelete: '2',
       })
     ).toEqual([WIDGET_WITH_FIRST_ANNOTATION]);
   });
@@ -229,7 +244,7 @@ describe('deleteXAnnotation', () => {
       deleteXAnnotation({
         dashboardConfiguration: [WIDGET_WITH_FIRST_ANNOTATION],
         widgetId: 'non-existent-widget',
-        annotationToDelete: XANNOTATION_1,
+        annotationIdToDelete: '1',
       })
     ).toEqual([WIDGET_WITH_FIRST_ANNOTATION]);
   });
@@ -241,7 +256,7 @@ describe('editXAnnotation', () => {
       editXAnnotation({
         dashboardConfiguration: [WIDGET_WITHOUT_ANNOTATIONS],
         widgetId: 'widget-without-annotations',
-        oldAnnotation: XANNOTATION_1,
+        oldAnnotationId: '1',
         newAnnotation: XANNOTATION_2,
       })
     ).toEqual([WIDGET_WITHOUT_ANNOTATIONS]);
@@ -253,6 +268,7 @@ describe('editXAnnotation', () => {
       height: 10,
       x: 10,
       y: 10,
+      z: 10,
       widget: 'line-chart',
       id: 'widget-with-first-annotation',
       annotations: {
@@ -264,6 +280,7 @@ describe('editXAnnotation', () => {
       height: 10,
       x: 10,
       y: 10,
+      z: 10,
       widget: 'line-chart',
       id: 'widget-with-first-annotation',
       annotations: ANNOTATIONS_2,
@@ -272,7 +289,7 @@ describe('editXAnnotation', () => {
       editXAnnotation({
         dashboardConfiguration: [INPUT_WIDGET],
         widgetId: 'widget-with-first-annotation',
-        oldAnnotation: XANNOTATION_1,
+        oldAnnotationId: '1',
         newAnnotation: XANNOTATION_2,
       })
     ).toEqual([RESULT_WIDGET]);
@@ -284,6 +301,7 @@ describe('editXAnnotation', () => {
       height: 10,
       x: 10,
       y: 10,
+      z: 10,
       widget: 'line-chart',
       id: 'widget-with-both-annotations',
       annotations: {
@@ -295,6 +313,7 @@ describe('editXAnnotation', () => {
       height: 10,
       x: 10,
       y: 10,
+      z: 10,
       widget: 'line-chart',
       id: 'widget-with-both-annotations',
       annotations: {
@@ -305,7 +324,7 @@ describe('editXAnnotation', () => {
       editXAnnotation({
         dashboardConfiguration: [INPUT_WIDGET],
         widgetId: 'widget-with-both-annotations',
-        oldAnnotation: XANNOTATION_2,
+        oldAnnotationId: '2',
         newAnnotation: XANNOTATION_3,
       })
     ).toEqual([RESULT_WIDGET]);
