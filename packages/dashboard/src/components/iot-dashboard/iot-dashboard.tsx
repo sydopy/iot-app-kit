@@ -9,7 +9,7 @@ import { DASHBOARD_CONTAINER_ID, getDashboardPosition } from './getDashboardPosi
 import { trimWidgetPosition } from './trimWidgetPosition';
 import { deleteWidgets } from '../../dashboard-actions/delete';
 import { paste } from '../../dashboard-actions/paste';
-import { XAnnotation} from '@synchro-charts/core';
+import { XAnnotation } from '@synchro-charts/core';
 import { addXAnnotation, deleteXAnnotation, editXAnnotation } from '../../dashboard-actions/annotations';
 
 const DEFAULT_STRETCH_TO_FIT = true;
