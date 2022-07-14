@@ -76,9 +76,7 @@ export const editXAnnotation = ({
     if (widget.id == widgetId) {
       let currAnnotations = widget.annotations;
       if (currAnnotations && currAnnotations.x) {
-        currAnnotations.x = currAnnotations.x.filter(
-          (annotation) => annotation.id != oldAnnotationId
-        );
+        currAnnotations.x = currAnnotations.x.filter((annotation) => annotation.id != oldAnnotationId);
         currAnnotations.x.push(newAnnotation);
       }
       return {

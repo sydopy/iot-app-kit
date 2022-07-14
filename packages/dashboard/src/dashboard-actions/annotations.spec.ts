@@ -224,7 +224,7 @@ describe('deleteXAnnotation', () => {
       deleteXAnnotation({
         dashboardConfiguration: [INPUT_WIDGET],
         widgetId: 'widget-with-both-annotations',
-        annotationIdToDelete: ,
+        annotationIdToDelete: '2',
       })
     ).toEqual([RESULT_WIDGET]);
   });

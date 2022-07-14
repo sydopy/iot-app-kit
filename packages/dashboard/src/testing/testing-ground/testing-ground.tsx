@@ -33,73 +33,91 @@ const sampleViewport = {
 const sampleLegend = {
   width: 100,
   position: 'BOTTOM',
-}
-const sampleDataStreams = [{
-  id: 'car-count',
-  dataType: DataType.STRING,
-  color: '#1d8102',
-  name: 'Car Count',
-  resolution: DAY_RESOLUTION, // one day
-  data: [
-    {
-      x: new Date(2000, 1, 0).getTime(),
-      y: 7,
-    }, {
-      x: new Date(2000, 3, 0).getTime(),
-      y: 18,
-    }, {
-      x: new Date(2000, 4, 0).getTime(),
-      y: 11,
-    }, {
-      x: new Date(2000, 5, 0).getTime(),
-      y: 30,
-    }, {
-      x: new Date(2000, 7, 0).getTime(),
-      y: 16,
-    }, {
-      x: new Date(2000, 8, 0).getTime(),
-      y: 26,
-    }, {
-      x: new Date(2000, 10, 0).getTime(),
-      y: 46,
-    }, {
-      x: new Date(2000, 11, 0).getTime(),
-      y: 100,
-    }
-  ],
-  aggregates: {
-    [DAY_RESOLUTION]: [{
-      x: new Date(2000, 1, 0).getTime(),
-      y: 7,
-    }, {
-      x: new Date(2000, 3, 0).getTime(),
-      y: 18,
-    }, {
-      x: new Date(2000, 4, 0).getTime(),
-      y: 11,
-    }, {
-      x: new Date(2000, 5, 0).getTime(),
-      y: 30,
-    }, {
-      x: new Date(2000, 7, 0).getTime(),
-      y: 16,
-    }, {
-      x: new Date(2000, 8, 0).getTime(),
-      y: 26,
-    }, {
-      x: new Date(2000, 10, 0).getTime(),
-      y: 46,
-    }, {
-      x: new Date(2000, 11, 0).getTime(),
-      y: 100,
-    }]
-  }
-}];
+};
+const sampleDataStreams = [
+  {
+    id: 'car-count',
+    dataType: DataType.STRING,
+    color: '#1d8102',
+    name: 'Car Count',
+    resolution: DAY_RESOLUTION, // one day
+    data: [
+      {
+        x: new Date(2000, 1, 0).getTime(),
+        y: 7,
+      },
+      {
+        x: new Date(2000, 3, 0).getTime(),
+        y: 18,
+      },
+      {
+        x: new Date(2000, 4, 0).getTime(),
+        y: 11,
+      },
+      {
+        x: new Date(2000, 5, 0).getTime(),
+        y: 30,
+      },
+      {
+        x: new Date(2000, 7, 0).getTime(),
+        y: 16,
+      },
+      {
+        x: new Date(2000, 8, 0).getTime(),
+        y: 26,
+      },
+      {
+        x: new Date(2000, 10, 0).getTime(),
+        y: 46,
+      },
+      {
+        x: new Date(2000, 11, 0).getTime(),
+        y: 100,
+      },
+    ],
+    aggregates: {
+      [DAY_RESOLUTION]: [
+        {
+          x: new Date(2000, 1, 0).getTime(),
+          y: 7,
+        },
+        {
+          x: new Date(2000, 3, 0).getTime(),
+          y: 18,
+        },
+        {
+          x: new Date(2000, 4, 0).getTime(),
+          y: 11,
+        },
+        {
+          x: new Date(2000, 5, 0).getTime(),
+          y: 30,
+        },
+        {
+          x: new Date(2000, 7, 0).getTime(),
+          y: 16,
+        },
+        {
+          x: new Date(2000, 8, 0).getTime(),
+          y: 26,
+        },
+        {
+          x: new Date(2000, 10, 0).getTime(),
+          y: 46,
+        },
+        {
+          x: new Date(2000, 11, 0).getTime(),
+          y: 100,
+        },
+      ],
+    },
+  },
+];
 
 const sampleTimeSeriesData = {
   datastreams: sampleDataStreams,
   viewport: sampleViewport,
-}
+};
 
 const DEFAULT_CELL_SIZE = 30;
 const DEFAULT_WIDTH = 1000;
@@ -151,7 +169,11 @@ export class TestingGround {
       id: Date.now().toString(),
     };
     console.log('Annotation for ', XANNOTATION.value, ' added!');
-    this.dashboardConfiguration = addXAnnotation({dashboardConfiguration: original, widgetId: widgetId, annotation: XANNOTATION});
+    this.dashboardConfiguration = addXAnnotation({
+      dashboardConfiguration: original,
+      widgetId: widgetId,
+      annotation: XANNOTATION,
+    });
   };
 
   deleteAnnotation = (e: Event) => {
@@ -159,7 +181,11 @@ export class TestingGround {
     const original = this.dashboardConfiguration;
     const stringInput = (e as any).target[0].value;
     console.log('Annotation ', stringInput, ' deleted!');
-    this.dashboardConfiguration = deleteXAnnotation({dashboardConfiguration: original, widgetId: widgetId, annotationIdToDelete: stringInput});
+    this.dashboardConfiguration = deleteXAnnotation({
+      dashboardConfiguration: original,
+      widgetId: widgetId,
+      annotationIdToDelete: stringInput,
+    });
   };
 
   editAnnotation = (e: Event) => {
@@ -172,13 +198,18 @@ export class TestingGround {
       color: 'red',
       value: dateInput,
       id: Date.now().toString(),
-    }
-    this.dashboardConfiguration = editXAnnotation({dashboardConfiguration: original, widgetId: widgetId, oldAnnotationId: stringInput, newAnnotation: XANNOTATION});
+    };
+    this.dashboardConfiguration = editXAnnotation({
+      dashboardConfiguration: original,
+      widgetId: widgetId,
+      oldAnnotationId: stringInput,
+      newAnnotation: XANNOTATION,
+    });
   };
 
   listWidgets = (e: Event) => {
     console.log('List of widgets:', JSON.stringify(this.dashboardConfiguration));
-  }
+  };
 
   render() {
     return (

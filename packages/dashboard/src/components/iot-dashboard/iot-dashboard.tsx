@@ -35,68 +35,86 @@ const sampleViewport = {
 const sampleLegend = {
   width: 100,
   position: 'BOTTOM',
-}
-const sampleDataStreams = [{
-  id: 'car-count',
-  dataType: DataType.STRING,
-  color: '#1d8102',
-  name: 'Car Count',
-  resolution: DAY_RESOLUTION, // one day
-  data: [
-    {
-      x: new Date(2000, 1, 0).getTime(),
-      y: 7,
-    }, {
-      x: new Date(2000, 3, 0).getTime(),
-      y: 18,
-    }, {
-      x: new Date(2000, 4, 0).getTime(),
-      y: 11,
-    }, {
-      x: new Date(2000, 5, 0).getTime(),
-      y: 30,
-    }, {
-      x: new Date(2000, 7, 0).getTime(),
-      y: 16,
-    }, {
-      x: new Date(2000, 8, 0).getTime(),
-      y: 26,
-    }, {
-      x: new Date(2000, 10, 0).getTime(),
-      y: 46,
-    }, {
-      x: new Date(2000, 11, 0).getTime(),
-      y: 100,
-    }
-  ],
-  aggregates: {
-    [DAY_RESOLUTION]: [{
-      x: new Date(2000, 1, 0).getTime(),
-      y: 7,
-    }, {
-      x: new Date(2000, 3, 0).getTime(),
-      y: 18,
-    }, {
-      x: new Date(2000, 4, 0).getTime(),
-      y: 11,
-    }, {
-      x: new Date(2000, 5, 0).getTime(),
-      y: 30,
-    }, {
-      x: new Date(2000, 7, 0).getTime(),
-      y: 16,
-    }, {
-      x: new Date(2000, 8, 0).getTime(),
-      y: 26,
-    }, {
-      x: new Date(2000, 10, 0).getTime(),
-      y: 46,
-    }, {
-      x: new Date(2000, 11, 0).getTime(),
-      y: 100,
-    }]
-  }
-}];
+};
+const sampleDataStreams = [
+  {
+    id: 'car-count',
+    dataType: DataType.STRING,
+    color: '#1d8102',
+    name: 'Car Count',
+    resolution: DAY_RESOLUTION, // one day
+    data: [
+      {
+        x: new Date(2000, 1, 0).getTime(),
+        y: 7,
+      },
+      {
+        x: new Date(2000, 3, 0).getTime(),
+        y: 18,
+      },
+      {
+        x: new Date(2000, 4, 0).getTime(),
+        y: 11,
+      },
+      {
+        x: new Date(2000, 5, 0).getTime(),
+        y: 30,
+      },
+      {
+        x: new Date(2000, 7, 0).getTime(),
+        y: 16,
+      },
+      {
+        x: new Date(2000, 8, 0).getTime(),
+        y: 26,
+      },
+      {
+        x: new Date(2000, 10, 0).getTime(),
+        y: 46,
+      },
+      {
+        x: new Date(2000, 11, 0).getTime(),
+        y: 100,
+      },
+    ],
+    aggregates: {
+      [DAY_RESOLUTION]: [
+        {
+          x: new Date(2000, 1, 0).getTime(),
+          y: 7,
+        },
+        {
+          x: new Date(2000, 3, 0).getTime(),
+          y: 18,
+        },
+        {
+          x: new Date(2000, 4, 0).getTime(),
+          y: 11,
+        },
+        {
+          x: new Date(2000, 5, 0).getTime(),
+          y: 30,
+        },
+        {
+          x: new Date(2000, 7, 0).getTime(),
+          y: 16,
+        },
+        {
+          x: new Date(2000, 8, 0).getTime(),
+          y: 26,
+        },
+        {
+          x: new Date(2000, 10, 0).getTime(),
+          y: 46,
+        },
+        {
+          x: new Date(2000, 11, 0).getTime(),
+          y: 100,
+        },
+      ],
+    },
+  },
+];
 
 @Component({
   tag: 'iot-dashboard',
@@ -514,7 +532,11 @@ export class IotDashboard {
       id: Date.now().toString(),
     };
     console.log('Annotation for ', XANNOTATION.value, ' added!');
-    this.dashboardConfiguration = addXAnnotation({dashboardConfiguration: original, widgetId: this.dashboardConfiguration[0].id, annotation: XANNOTATION});
+    this.dashboardConfiguration = addXAnnotation({
+      dashboardConfiguration: original,
+      widgetId: this.dashboardConfiguration[0].id,
+      annotation: XANNOTATION,
+    });
     console.log(this.dashboardConfiguration);
   };
 
@@ -523,7 +545,11 @@ export class IotDashboard {
     const original = this.dashboardConfiguration;
     const stringInput = (e as any).target[0].value;
     console.log('Annotation ', stringInput, ' deleted!');
-    this.dashboardConfiguration = deleteXAnnotation({dashboardConfiguration: original, widgetId: this.dashboardConfiguration[0].id, annotationIdToDelete: stringInput});
+    this.dashboardConfiguration = deleteXAnnotation({
+      dashboardConfiguration: original,
+      widgetId: this.dashboardConfiguration[0].id,
+      annotationIdToDelete: stringInput,
+    });
   };
 
   editAnnotation = (e: Event) => {
@@ -536,8 +562,13 @@ export class IotDashboard {
       color: 'red',
       value: dateInput,
       id: Date.now().toString(),
-    }
-    this.dashboardConfiguration = editXAnnotation({dashboardConfiguration: original, widgetId: this.dashboardConfiguration[0].id, oldAnnotationId: stringInput, newAnnotation: XANNOTATION});
+    };
+    this.dashboardConfiguration = editXAnnotation({
+      dashboardConfiguration: original,
+      widgetId: this.dashboardConfiguration[0].id,
+      oldAnnotationId: stringInput,
+      newAnnotation: XANNOTATION,
+    });
   };
 
   render() {
@@ -553,32 +584,32 @@ export class IotDashboard {
       <div>
         <br></br>
         <div>
-          <label htmlFor='addAnnotation'> Add annotation:</label>
-          <input type='date' id='addAnnotation' onChange={this.addAnnotation}></input>
+          <label htmlFor="addAnnotation"> Add annotation:</label>
+          <input type="date" id="addAnnotation" onChange={this.addAnnotation}></input>
         </div>
         <div>
           <form onSubmit={this.deleteAnnotation}>
-            <label htmlFor='deleteAnnotation'> Delete annotation:</label>
-            <select id='deleteAnnotation'>
-            {this.dashboardConfiguration[0].annotations?.x?.map(annotation => (
-              <option value={annotation.id}>{JSON.stringify(annotation)}</option>
-            ))}
+            <label htmlFor="deleteAnnotation"> Delete annotation:</label>
+            <select id="deleteAnnotation">
+              {this.dashboardConfiguration[0].annotations?.x?.map((annotation) => (
+                <option value={annotation.id}>{JSON.stringify(annotation)}</option>
+              ))}
             </select>
-            <input type='submit' value='Delete'></input>
+            <input type="submit" value="Delete"></input>
           </form>
-        <div>
-          <form onSubmit={this.editAnnotation}>
-            <label htmlFor='editAnnotation'> Edit annotation:</label>
-            <select id='editAnnotation'>
-            {this.dashboardConfiguration[0].annotations?.x?.map(annotation => (
-              <option value={annotation.id}>{JSON.stringify(annotation)}</option>
-            ))}
-            </select>
-            <input type='date' id='dateInput'></input>
-            <input type='submit' value='Edit'></input>
-          </form>
-      </div>
-      </div>
+          <div>
+            <form onSubmit={this.editAnnotation}>
+              <label htmlFor="editAnnotation"> Edit annotation:</label>
+              <select id="editAnnotation">
+                {this.dashboardConfiguration[0].annotations?.x?.map((annotation) => (
+                  <option value={annotation.id}>{JSON.stringify(annotation)}</option>
+                ))}
+              </select>
+              <input type="date" id="dateInput"></input>
+              <input type="submit" value="Edit"></input>
+            </form>
+          </div>
+        </div>
         <div
           id={DASHBOARD_CONTAINER_ID}
           tabIndex={0}
