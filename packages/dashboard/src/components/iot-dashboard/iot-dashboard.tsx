@@ -15,8 +15,6 @@ import { addXAnnotation, deleteXAnnotation, editXAnnotation } from '../../dashbo
 const DEFAULT_STRETCH_TO_FIT = true;
 const DEFAULT_CELL_SIZE = 15;
 
-const DAY_RESOLUTION = 1000 * 60 * 60 * 24; // one day
-
 @Component({
   tag: 'iot-dashboard',
   styleUrl: 'iot-dashboard.css',
