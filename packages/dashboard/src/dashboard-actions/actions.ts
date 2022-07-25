@@ -1,5 +1,5 @@
 import { Action } from 'redux';
-import { Position, Anchor } from '../types';
+import { Position, DashboardConfiguration, Anchor } from '../types';
 
 export const MOVE = 'MOVE';
 

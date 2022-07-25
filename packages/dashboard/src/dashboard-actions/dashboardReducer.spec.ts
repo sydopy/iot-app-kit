@@ -229,10 +229,7 @@ describe('DELETE', () => {
 describe('COPY', () => {
   it('copies selected widgets', () => {
     const state: DashboardReducerState = {
-      dashboardConfiguration: {
-        widgets: [MOCK_KPI_WIDGET],
-        viewport: {"duration": "5m"}
-      },
+      dashboardConfiguration: [MOCK_KPI_WIDGET],
       selectedWidgetIds: [MOCK_KPI_WIDGET.id],
       numTimesCopyGroupHasBeenPasted: 0,
       copyGroup: [],
@@ -257,10 +254,7 @@ describe('COPY', () => {
 describe('Stretch to fit', () => {
   it('changes stretch to fit status', () => {
     const state: DashboardReducerState = {
-      dashboardConfiguration: {
-        widgets: [MOCK_KPI_WIDGET],
-        viewport: {"duration": "5m"}
-      },
+      dashboardConfiguration: [MOCK_KPI_WIDGET],
       selectedWidgetIds: [MOCK_KPI_WIDGET.id],
       numTimesCopyGroupHasBeenPasted: 0,
       copyGroup: [],
@@ -278,10 +272,7 @@ describe('Stretch to fit', () => {
 describe('Edit Cell Size', () => {
   it('edits cell size', () => {
     const state: DashboardReducerState = {
-      dashboardConfiguration: {
-        widgets: [MOCK_KPI_WIDGET],
-        viewport: {"duration": "5m"}
-      },
+      dashboardConfiguration: [MOCK_KPI_WIDGET],
       selectedWidgetIds: [MOCK_KPI_WIDGET.id],
       numTimesCopyGroupHasBeenPasted: 0,
       copyGroup: [],
@@ -306,10 +297,7 @@ describe('Edit Cell Size', () => {
 describe('Edit Width', () => {
   it('edits width of dashboard', () => {
     const state: DashboardReducerState = {
-      dashboardConfiguration: {
-        widgets: [MOCK_KPI_WIDGET],
-        viewport: {"duration": "5m"}
-      },
+      dashboardConfiguration: [MOCK_KPI_WIDGET],
       selectedWidgetIds: [MOCK_KPI_WIDGET.id],
       numTimesCopyGroupHasBeenPasted: 0,
       copyGroup: [],

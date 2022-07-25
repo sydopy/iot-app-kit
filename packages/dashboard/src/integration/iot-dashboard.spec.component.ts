@@ -1,5 +1,5 @@
 import { renderDashboard } from '../testing/renderDashboard';
-import { DashboardConfiguration, Widget } from '../types';
+import { Widget } from '../types';
 
 const createWidget = (): Widget => ({
   x: 1,
@@ -11,17 +11,13 @@ const createWidget = (): Widget => ({
   queries: [],
   id: Math.random().toString() + new Date().toISOString(),
 });
-const dashboardConfiguration:DashboardConfiguration = {
-  viewport: { duration: '5m' },
-  widgets: [createWidget()],
-};
+
 it('click and drag moves widget', () => {
   renderDashboard({
-    dashboardConfiguration: dashboardConfiguration,
-    width: 500,
-    cellSize: 10,
-    stretchToFit: false,
-    onDashboardConfigurationChange: () => {},
+    dashboardConfiguration: {
+      viewport: { duration: '5m' },
+      widgets: [createWidget()],
+    },
   });
 
   cy.get('iot-dashboard-widget').move({ deltaX: 100, deltaY: 100, force: true });
@@ -34,11 +30,10 @@ it('click and drag moves widget', () => {
 
 it('selects and deletes widget', () => {
   renderDashboard({
-    dashboardConfiguration: dashboardConfiguration,
-    width: 500,
-    cellSize: 10,
-    stretchToFit: false,
-    onDashboardConfigurationChange: () => {},
+    dashboardConfiguration: {
+      viewport: { duration: '5m' },
+      widgets: [createWidget()],
+    },
   });
 
   cy.get('iot-dashboard-widget').should('exist');
@@ -49,15 +44,14 @@ it('selects and deletes widget', () => {
 
 it('copy and paste widget', () => {
   renderDashboard({
-    dashboardConfiguration: dashboardConfiguration,
-    width: 500,
-    cellSize: 10,
-    stretchToFit: false,
-    onDashboardConfigurationChange: () => {},
+    dashboardConfiguration: {
+      viewport: { duration: '5m' },
+      widgets: [createWidget()],
+    },
   });
 
   cy.get('iot-dashboard-widget').click();
   cy.get('body').type('{cmd}c', { release: true }).type('{cmd}v', { release: true });
 
-  cy.get('iot-dashboard-internal').find('iot-dashboard-widget').should('have.length', 2);
+  cy.get('iot-dashboard').find('iot-dashboard-widget').should('have.length', 2);
 });

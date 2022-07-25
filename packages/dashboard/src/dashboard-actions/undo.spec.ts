@@ -83,23 +83,20 @@ describe('MOVE', () => {
       widgetIds: ['mock-kpi-widget'],
       cellSize: 30,
     });
-    if (moveAction.payload.prevPosition){
-      const reversedDashboard: DashboardConfiguration = getMovedDashboardConfiguration({
-        position: moveAction.payload.prevPosition,
-        previousPosition: moveAction.payload.position,
-        cellSize: moveAction.payload.cellSize,
-        selectedWidgetIds: moveAction.payload.widgetIds,
-        dashboardConfiguration: state.dashboardConfiguration,
-      });
-  
-      expect(
-        undo({
-          dashAction: moveAction,
-          dashboardState: state,
-        }).dashboardConfiguration
-      ).toEqual(reversedDashboard);
-    }
-    
+    const reversedDashboard: DashboardConfiguration = getMovedDashboardConfiguration({
+      position: moveAction.payload.prevPosition,
+      previousPosition: moveAction.payload.position,
+      cellSize: moveAction.payload.cellSize,
+      selectedWidgetIds: moveAction.payload.widgetIds,
+      dashboardConfiguration: state.dashboardConfiguration,
+    });
+
+    expect(
+      undo({
+        dashAction: moveAction,
+        dashboardState: state,
+      }).dashboardConfiguration
+    ).toEqual(reversedDashboard);
   });
 });
 
@@ -110,7 +107,6 @@ describe('RESIZE', () => {
       changeInPosition: { x: 10, y: 10 },
       widgetIds: [MOCK_KPI_WIDGET.id],
       cellSize: state.cellSize,
-      dashboardConfiguration: state.dashboardConfiguration,
     });
     const reversedDashboard: DashboardConfiguration = resize({
       anchor: resizeAction.payload.anchor,
@@ -137,7 +133,6 @@ describe('RESIZE', () => {
       changeInPosition: { x: 10, y: 10 },
       widgetIds: [MOCK_KPI_WIDGET.id],
       cellSize: state.cellSize,
-      dashboardConfiguration: state.dashboardConfiguration,
     });
 
     expect(
@@ -201,16 +196,16 @@ describe('DELETE', () => {
   });
 
   it('returns original state when reversed twice', () => {
-    const createAction: CreateAction = onCreateAction({
-      dashboardConfiguration: state.dashboardConfiguration,
+    const deleteAction: DeleteAction = onDeleteAction({
+      widgetIds: [MOCK_KPI_WIDGET.id],
       widgets: [MOCK_KPI_WIDGET],
     });
 
     expect(
       undo({
-        dashAction: reverseCreate(createAction),
+        dashAction: reverseCreate(deleteAction),
         dashboardState: undo({
-          dashAction: createAction,
+          dashAction: deleteAction,
           dashboardState: state,
         }),
       })

@@ -9,7 +9,6 @@ it('inverts the changeInPosition attribute', () => {
         changeInPosition: { x: 5, y: 3 },
         widgetIds: ['some-id'],
         cellSize: 10,
-        dashboardConfiguration: {widgets: [], viewport: {"duration": "5m"}}
       },
     })
   ).toEqual({
@@ -28,7 +27,6 @@ it('returns the original action when reversed twice', () => {
           changeInPosition: { x: 5, y: 3 },
           widgetIds: ['some-id'],
           cellSize: 10,
-          dashboardConfiguration: {widgets: [], viewport: {"duration": "5m"}}
         },
       })
     )
@@ -46,7 +44,6 @@ it('returns no change when no change in position is made', () => {
         changeInPosition: { x: 0, y: 0 },
         widgetIds: ['some-id'],
         cellSize: 10,
-        dashboardConfiguration: {widgets: [], viewport: {"duration": "5m"}}
       },
     })
   ).toEqual({
