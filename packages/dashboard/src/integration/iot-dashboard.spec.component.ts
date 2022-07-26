@@ -13,7 +13,6 @@ const createWidget = () => ({
   widget: 'line-chart',
   id: Math.random().toString() + new Date().toISOString(),
 });
-/*
 const renderDashboard = ({
   dashboardConfiguration,
   width = 500,
@@ -73,4 +72,3 @@ it('undoes a move action', () => {
     'position: absolute; z-index: 1; top: 100px; left: 100px; width: 40px; height: 40px;'
   );
 });
-*/
